@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Cadastro</title>
+
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+	rel="stylesheet">
+<link type="text/css" rel="stylesheet"
+	href="/materialize/css/materialize.min.css" media="screen,projection" />
+<link type="text/css" rel="stylesheet"
+	href="/materialize/css/materialize.css" media="screen,projection" />
+</head>
+<body>
+	<h3 align="center">Spring Boot + Thymeleaf + Material Designer Lite</h3>
+	<h5 align="center">Cadastro de Pessoas</h5>
+	<br />
+	<a class="btn waves-effect waves-light" href="/cadastropessoa">Cad.
+		Pessoa<i class="material-icons left">person_add</i>
+	</a>
+	<br />
+	<div th:each="p : ${pessoaobj}">
+		<div class="row">
+			<p>
+				ID : <span th:text="${p.id}"></span>
+			</p>
+			<p>
+				Nome : <span th:text="${p.nome}"></span>
+			</p>
+			<p>
+				Sobrenome : <span th:text="${p.sobrenome}"></span>
+			</p>
+			<p>
+				Idade : <span th:text="${p.idade}"></span>
+			</p>
+		</div>
+	</div>
+	<br />
+	<h5 align="center">Telefones</h5>
+	<br />
+	<div class="row">
+		<form th:action="@{/addfonePessoa/{pessoaid}(pessoaid=${pessoaobj.id})}" method="post" class="col s12">
+			<div class="input-field col s6">
+				<label class="active" for="numero">Número :</label> <input id="numero"
+					name="numero" class="validade">
+			</div>
+			<div class="input-field col s6">
+				<label class="active" for="tipo">Tipo :</label> <input id="tipo"
+					name="tipo" class="validade">
+			</div>
+			<button class="btn waves-effect waves-light" type="submit"
+				name="action">Adicionar <i class="material-icons left">phone</i>
+			</button>
+		</form>
+	</div>
+
+
+	<script type="text/javascript" src="/materialize/js/materialize.min.js"></script>
+	<script type="text/javascript" src="/materialize/js/materialize.js"></script>
+</body>
+</html>

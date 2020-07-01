@@ -2,66 +2,102 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="ISO-8859-1">
+<meta charset="UTF-8">
 <title>Cadastro</title>
 
-      <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-      <link type="text/css" rel="stylesheet" href="/materialize/css/materialize.min.css"  media="screen,projection"/>
-      <link type="text/css" rel="stylesheet" href="/materialize/css/materialize.css"  media="screen,projection"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+	rel="stylesheet">
+<link type="text/css" rel="stylesheet"
+	href="/materialize/css/materialize.min.css" media="screen,projection" />
+<link type="text/css" rel="stylesheet"
+	href="/materialize/css/materialize.css" media="screen,projection" />
 </head>
 <body>
-<div class="row">
-    <form class="col s12" action="salvarpessoa" method="POST" th:object = "${pessoaobj}">
-      <div class="row">
-       <div class="input-field col s6">
-          <i class="material-icons prefix">sd_card</i>
-          <input id="sd_card" type="text" class="validate" th:field="*{id}" readonly="readonly">
-          <label for="sd_card">ID</label>
-        </div>
-         <div class="input-field col s6">
-          <i class="material-icons prefix">cake</i>
-          <input id="cake" type="text" class="validate" name="Idade" th:field="*{idade}">
-          <label for="cake">Idade</label>
-        </div>
-        <div class="input-field col s6">
-          <i class="material-icons prefix">account_circle</i>
-          <input id="icon_prefix" type="text" class="validate" name="Nome" th:field="*{nome}">
-          <label for="icon_prefix">Nome</label>
-        </div>
-        <div class="input-field col s6">
-          <i class="material-icons prefix">account_circle</i>
-          <input id="icon_prefix" type="text" class="validate" name="Sobrenome" th:field="*{sobrenome}">
-          <label for="icon_prefix">Sobrenome</label>
-        </div>
-      </div>
-     <button class="btn waves-effect waves-light" type="submit" name="action">Salvar
-    		<i class="material-icons right">send</i>
- 	 </button>
-    </form>
-</div>
+	<h3 align="center">Spring Boot + Thymeleaf + Material Designer Lite</h3>
+	<h5 align="center">Cadastro de Pessoas</h5>
+	<br />
+	<br />
+	<div class="row">
+		<form class="col s12" action="salvarpessoa" method="POST"
+			th:object="${pessoaobj}">
+			<div class="row">
+				<div class="input-field col s6">
+					<i class="material-icons prefix">sd_card</i> <input id="sd_card"
+						type="text" class="validate" th:field="*{id}" readonly="readonly">
+					<label for="sd_card">ID</label>
+				</div>
+				<div class="input-field col s6">
+					<i class="material-icons prefix">cake</i> <input id="cake"
+						type="text" class="validate" name="Idade" th:field="*{idade}">
+					<label for="cake">Idade</label>
+				</div>
+				<div class="input-field col s6">
+					<i class="material-icons prefix">account_circle</i> <input
+						id="icon_prefix" type="text" class="validate" name="Nome"
+						th:field="*{nome}"> <label for="icon_prefix">Nome</label>
+				</div>
+				<div class="input-field col s6">
+					<i class="material-icons prefix">account_circle</i> <input
+						id="icon_prefix" type="text" class="validate" name="Sobrenome"
+						th:field="*{sobrenome}"> <label for="icon_prefix">Sobrenome</label>
+				</div>
 
-	<a href="/listapessoas">Lista Pessoas</a>
+			</div>
+			<button class="btn waves-effect waves-light" type="submit"
+				name="action">
+				Salvar <i class="material-icons right">send</i>
+			</button>
+			<button class="btn waves-effect waves-light" onclick="document.getElementById('formpessoa').reset()">Novo</button>
+		</form>
+	</div>
+
+	<br />
+	<br />
+	
+	<div class="row">
+		<form action="pesquisarpessoa" method="post" class="col s12">
+			<div class="row">
+				<div class="nput-field col s12">
+					<label for="nomepesquisa" class="active"> Pesquisa por nome : </label> 
+					<input name="nomepesquisa" id="nopesquisa" class="validate"/>
+					<button class="btn waves-effect waves-light" type="submit"
+						name="action">Buscar<i class="material-icons right">search</i>
+					</button>	 
+					<a class="btn waves-effect waves-light" href="/listapessoas">Lista Pessoas
+					<i class="material-icons right">send</i></a>
+					
+				</div>
+			</div>
+		</form>
+	</div>
+	<br />
+	<br />
+
 	<table class="striped">
 		<thead>
-          <tr>
-              <th>ID</th>
-              <th>Nome</th>
-              <th>Sobrenome</th>
-              <th>Idade</th>
-          </tr>
-        </thead>
-        <tbody>
-		<tr th:each="pessoa: ${pessoas}">
-			<td th:text="${pessoa.id}"></td>
-			<td th:text="${pessoa.nome}"></td>
-			<td th:text="${pessoa.sobrenome}"></td>
-			<td th:text="${pessoa.idade}"></td>
-			<td><a th:href="@{/editarpessoa/{idpessoa}(idpessoa=${pessoa.id})}"><i class="material-icons">edit</i></a></td>
-			<td><a th:href="@{/removerpessoa/{idpessoa}(idpessoa=${pessoa.id})}"><i class="material-icons">cancel</i></a> </td>
-		</tr>
+			<tr>
+				<th>ID</th>
+				<th>Nome</th>
+				<th>Sobrenome</th>
+				<th>Idade</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="pessoa: ${pessoas}">
+				<td th:text="${pessoa.id}"></td>
+				<td><a th:href="@{/telefones/{idpessoa}(idpessoa=${pessoa.id})}" ><span th:text="${pessoa.nome}"></span></a></td>
+				<td th:text="${pessoa.sobrenome}"></td>
+				<td th:text="${pessoa.idade}"></td>
+				<td><a
+					th:href="@{/editarpessoa/{idpessoa}(idpessoa=${pessoa.id})}"><i
+						class="material-icons">edit</i></a></td>
+				<td><a
+					th:href="@{/removerpessoa/{idpessoa}(idpessoa=${pessoa.id})}"><i
+						class="material-icons">cancel</i></a></td>
+			</tr>
 		</tbody>
 	</table>
- <script type="text/javascript" src="/materialize/js/materialize.min.js"></script>
- <script type="text/javascript" src="/materialize/js/materialize.js"></script>
+	<script type="text/javascript" src="/materialize/js/materialize.min.js"></script>
+	<script type="text/javascript" src="/materialize/js/materialize.js"></script>
 </body>
 </html>

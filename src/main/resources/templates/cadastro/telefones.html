@@ -40,20 +40,36 @@
 	<h5 align="center">Telefones</h5>
 	<br />
 	<div class="row">
-		<form th:action="@{/addfonePessoa/{pessoaid}(pessoaid=${pessoaobj.id})}" method="post" class="col s12">
+		<form th:action="@{/addfonePessoa/{pessoaid}(pessoaid=${pessoaobj.id})}" method="post" class="col s12" >
 			<div class="input-field col s6">
 				<label class="active" for="numero">Número :</label> <input id="numero"
 					name="numero" class="validade">
 			</div>
 			<div class="input-field col s6">
 				<label class="active" for="tipo">Tipo :</label> <input id="tipo"
-					name="tipo" class="validade">
+					name="tipo"  class="validade">
 			</div>
 			<button class="btn waves-effect waves-light" type="submit"
 				name="action">Adicionar <i class="material-icons left">phone</i>
 			</button>
 		</form>
 	</div>
+	
+		<table class="striped">
+		<thead>
+			<tr>
+				<th>Número</th>
+				<th>Tipo</th>
+			</tr>
+		</thead>	
+		<tbody>
+			<tr th:each="fone : ${telefones}">
+				<td th:text="${fone.numero}"/>
+				<td th:text="${fone.tipo}"/>
+				<td><a th:href="@{/removertelefone/{idtelefone}(idtelefone=${fone.id})}"><i class="material-icons">cancel</i></a></td>
+			</tr>
+		</tbody>	
+	</table>	
 
 
 	<script type="text/javascript" src="/materialize/js/materialize.min.js"></script>

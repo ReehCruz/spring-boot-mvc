@@ -18,7 +18,7 @@
 	<br />
 	<br />
 	<div class="row">
-		<form class="col s12" action="salvarpessoa" method="POST"
+		<form class="col s12" action="salvarpessoa" id="formpessoa" method="POST"
 			th:object="${pessoaobj}">
 			<div class="row">
 				<div class="input-field col s6">
@@ -47,7 +47,7 @@
 				name="action">
 				Salvar <i class="material-icons right">send</i>
 			</button>
-			<button class="btn waves-effect waves-light" onclick="document.getElementById('formpessoa').reset()">Novo</button>
+			<button class="btn waves-effect waves-light" onclick="document.getElementById('formpessoa').reset();">Novo</button>
 		</form>
 	</div>
 

@@ -18,6 +18,14 @@
 	<br />
 	<br />
 	<div class="row">
+	
+	<br/>
+	<div th:each = "m : ${msg}">
+		<span th:text = "${m}"></span>
+	</div>
+	
+	<br/>
+	
 		<form class="col s12" action="salvarpessoa" id="formpessoa" method="POST"
 			th:object="${pessoaobj}">
 			<div class="row">

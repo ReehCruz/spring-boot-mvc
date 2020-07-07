@@ -1,5 +1,6 @@
 package com.rebeca.springboot.security;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -13,6 +14,9 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @Configuration
 @EnableWebSecurity
 public class WebConfigSecurity extends WebSecurityConfigurerAdapter {
+	
+	@Autowired
+	private ImplementacaoUserDetailsService implementacaoUserDetailsService;
 	
 	@Override //configura as solicitações de acesso por http 
 	protected void configure(HttpSecurity http) throws Exception {
@@ -30,11 +34,9 @@ public class WebConfigSecurity extends WebSecurityConfigurerAdapter {
 	
 	@Override //cria atentificaçao do usuario com banco ou em memória 
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-		auth.inMemoryAuthentication().passwordEncoder(new BCryptPasswordEncoder())
-		.withUser("root")
-		.password("$2a$10$9GZJVZmeMCPJXvPyKqAFJOQEeRe/xTo6XIBmMPYYaYGknA5H1kunG")
-		.roles("ADMIN");
-	} 
+		auth.userDetailsService(implementacaoUserDetailsService)
+		.passwordEncoder(new BCryptPasswordEncoder());
+		} 
 	
 	@Override //ignora URL especificas
 	public void configure(WebSecurity web) throws Exception {

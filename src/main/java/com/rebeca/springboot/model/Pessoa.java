@@ -23,6 +23,9 @@ public class Pessoa implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	
+
+	private String email;
+	
 	@NotNull(message = "Nome não pode ser nulo")
 	@NotEmpty(message="Nome não pode ser vazio")
 	private String nome;
@@ -34,23 +37,41 @@ public class Pessoa implements Serializable {
 	@Min(value = 18, message = "idade inválida")
 	private String idade;
 	
+	private String cpfOucnpj;
+	
 	@OneToMany(mappedBy = "pessoa", orphanRemoval = true, cascade = CascadeType.ALL)
 	private List<Telefone> telefones;
 	
-	public List<Telefone> getTelefones() {
-		return telefones;
-	}
+	private String rua;
 	
-	public void setTelefones(List<Telefone> telefones) {
-		this.telefones = telefones;
-	}
+	private String numero;
 	
+	private String bairro;
+	
+	private String cidade;
+	
+	private String uf;
+	
+	private String cep; 
+	
+	private String ibge;
+	
+	
+		
 	public Long getId() {
 		return id;
 	}
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	public String getNome() {
@@ -76,4 +97,79 @@ public class Pessoa implements Serializable {
 	public void setIdade(String idade) {
 		this.idade = idade;
 	}
-}
+		
+	public String getCpfOucnpj() {
+		return cpfOucnpj;
+	}
+
+	public void setCpfOucnpj(String cpfOucnpj) {
+		this.cpfOucnpj = cpfOucnpj;
+	}
+
+	public String getNumero() {
+		return numero;
+	}
+
+	public void setNumero(String numero) {
+		this.numero = numero;
+	}
+
+	public List<Telefone> getTelefones() {
+		return telefones;
+	}
+	
+	public void setTelefones(List<Telefone> telefones) {
+		this.telefones = telefones;
+	}
+
+	public String getRua() {
+		return rua;
+	}
+
+	public void setRua(String rua) {
+		this.rua = rua;
+	}
+
+	public String getBairro() {
+		return bairro;
+	}
+
+	public void setBairro(String bairro) {
+		this.bairro = bairro;
+	}
+
+	public String getCidade() {
+		return cidade;
+	}
+
+	public void setCidade(String cidade) {
+		this.cidade = cidade;
+	}
+
+	public String getUf() {
+		return uf;
+	}
+
+	public void setUf(String uf) {
+		this.uf = uf;
+	}
+
+	public String getCep() {
+		return cep;
+	}
+
+	public void setCep(String cep) {
+		this.cep = cep;
+	}
+
+	public String getIbge() {
+		return ibge;
+	}
+
+	public void setIbge(String ibge) {
+		this.ibge = ibge;
+	}
+	
+	
+	
+}	

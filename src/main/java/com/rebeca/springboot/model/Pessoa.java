@@ -56,8 +56,8 @@ public class Pessoa implements Serializable {
 	
 	private String ibge;
 	
+	private String sexo;
 	
-		
 	public Long getId() {
 		return id;
 	}
@@ -168,6 +168,14 @@ public class Pessoa implements Serializable {
 
 	public void setIbge(String ibge) {
 		this.ibge = ibge;
+	}
+
+	public String getSexo() {
+		return sexo;
+	}
+
+	public void setSexo(String sexo) {
+		this.sexo = sexo;
 	}
 	
 	

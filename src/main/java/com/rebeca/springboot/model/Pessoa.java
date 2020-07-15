@@ -5,13 +5,18 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+
+import com.rebeca.springboot.model.enums.Cargo;
 
 
 
@@ -39,8 +44,14 @@ public class Pessoa implements Serializable {
 	
 	private String cpfOucnpj;
 	
+	@ManyToOne
+	private Profissao profissao;
+	
 	@OneToMany(mappedBy = "pessoa", orphanRemoval = true, cascade = CascadeType.ALL)
 	private List<Telefone> telefones;
+	
+	@Enumerated(EnumType.STRING)
+	private Cargo cargo;
 	
 	private String rua;
 	
@@ -57,6 +68,23 @@ public class Pessoa implements Serializable {
 	private String ibge;
 	
 	private String sexo;
+	
+	
+	public Profissao getProfissao() {
+		return profissao;
+	}
+	
+	public void setProfissao(Profissao profissao) {
+		this.profissao = profissao;
+	}
+	
+	public Cargo getCargo() {
+		return cargo;
+	}
+	
+	public void setCargo(Cargo cargo) {
+		this.cargo = cargo;
+	}
 	
 	public Long getId() {
 		return id;

@@ -18,7 +18,7 @@
 </head>
 <body>
 	<h3 align="center">Spring Boot + Thymeleaf + Material Designer Lite</h3>
-	<center><img src="https://image.freepik.com/free-vector/people-waving-hand-illustration-concept_52683-29825.jpg" width="626" height="417"></center>
+	<center><img class="responsive-img" src="https://image.freepik.com/free-vector/people-waving-hand-illustration-concept_52683-29825.jpg" width="626" height="417"></center>
 	<h5 align="center">Cadastro de Pessoas</h5>
 	<br />
 	<br />
@@ -94,13 +94,29 @@
 						id="cep" type="text" class="validate" name="cep"
 						th:field="*{cep}"> <label for="map">CEP</label>
 				</div>
-				<div class="input-field col s6">
+				
+				<div class="input-field col s3">
 					<i class="material-icons prefix">folder_shared</i> <input
 						id="ibge" type="text" class="validate" name="ibge"
 						th:field="*{ibge}"> <label for="icon_prefix">IBGE</label>
 				</div>
 				
-				<div class="input-field col s6">
+				<div class="input-field col s3">
+					<label for="profissao" class="active">Profissão</label>
+					<select class="browser-default" th:field="*{profissao}" id="profissao">
+						<option th:each="p : ${profissoes}" th:value="${p.id}" th:text="${p.nome}">
+					</select>
+				</div>
+				
+				<div class="input-field col s3">
+					<label for="cargo" class="active">Cargo</label>
+					<select class="browser-default" th:field="*{cargo}" id="cargo">
+						<option th:each="c : ${T(com.rebeca.springboot.model.enums.Cargo).values()}" 
+						th:value="${c}" th:text="${c.nome}">
+					</select>
+				</div>
+				
+				<div class="input-field col s3">
 					<label for="sexopessoa" class="active">Sexo</label>
 					<select class="browser-default" th:field="*{sexo}">
 						 <option value="" disabled selected>--[SELECIONE]--</option>

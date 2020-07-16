@@ -1,5 +1,6 @@
 package com.rebeca.springboot.controller;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.rebeca.springboot.model.Pessoa;
@@ -51,8 +53,10 @@ public class PessoaController {
 			return modelAndView;
 		}
 		
-		@RequestMapping(method = RequestMethod.POST, value = "**/salvarpessoa")
-		public ModelAndView salvar(@Valid Pessoa pessoa, BindingResult bindingResult) {
+		@RequestMapping(method = RequestMethod.POST, value = "**/salvarpessoa", 
+				consumes = {"multipart/form-data"})
+		public ModelAndView salvar(@Valid Pessoa pessoa, BindingResult bindingResult, 
+				final MultipartFile file) throws IOException {
 			
 			pessoa.setTelefones(telefoneRepository.getTelefones(pessoa.getId()));
 			
@@ -71,6 +75,21 @@ public class PessoaController {
 				return modelAndView;
 			}
 			
+			if (file.getSize() > 0) { /*Cadastrando um curriculo*/
+				pessoa.setCurriculo(file.getBytes());
+				pessoa.setTipoFileCurriculo(file.getContentType());
+				pessoa.setNomeFileCurriculo(file.getOriginalFilename());
+			} else { // se esta cadastrada no banco 
+				if (pessoa.getId() != null && pessoa.getId() > 0) {// editando
+					
+					Pessoa pessoaTemp = pessoaRepository.findById(pessoa.getId()).get();
+				
+					pessoa.setCurriculo(pessoaTemp.getCurriculo());
+					pessoa.setTipoFileCurriculo(pessoaTemp.getTipoFileCurriculo());
+					pessoa.setNomeFileCurriculo(pessoaTemp.getNomeFileCurriculo());
+				}
+			}
+			
 			pessoaRepository.save(pessoa);
 		
 			ModelAndView andView = new ModelAndView("cadastro/cadastropessoa");
@@ -79,6 +98,32 @@ public class PessoaController {
 			andView.addObject("pessoaobj", new Pessoa());
 			return andView;
 		}
+		
+		@GetMapping("**/baixarcurriculo/{idpessoa}")
+		public void baixarcurriculo(@PathVariable("idpessoa") Long idpessoa, 
+				HttpServletResponse response) throws IOException {
+		
+			/* Consultar objeto pessoa no banco de dados */
+			Pessoa pessoa = pessoaRepository.findById(idpessoa).get();
+			if(pessoa.getCurriculo() != null) {
+			
+				/* Setar o tamanho da resposta */
+				response.setContentLength(pessoa.getCurriculo().length);
+				
+				/*Tipo do arquivo para download ou pode ser generica applicaton/octet-stream */ 
+				response.setContentType(pessoa.getTipoFileCurriculo());
+				
+				/* Defini o cabecalho da resposta */
+				String headerKey = "Content-Disposition";
+				String headerValue = String.format("attachment; filename=\"%s\"", pessoa.getNomeFileCurriculo());
+				response.setHeader(headerKey, headerValue);
+				
+				/* Finaliza a resposta passando o arquivo */
+				response.getOutputStream().write(pessoa.getCurriculo());
+			}
+		}
+		
+		
 		
 		@RequestMapping(method = RequestMethod.GET, value = "/listapessoas")
 		public ModelAndView pessoas() {

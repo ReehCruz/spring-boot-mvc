@@ -12,37 +12,42 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 	
 <style type="text/css">
-form input[type=submit] {
- color: white;
+
+body {
+ margin-top: 11%;
 }
+
 </style> 	
 </head>
-<body>
-	<h1>Acesso ao sistema</h1>
 
+<body >
+<div class="valign-wrapper row login-box">
+	<div class="col card hoverable s10 pull-s1 m6 pull-m3 l4 pull-l4">
+		<form th:action="@{/login}" method="post" class="col s12" >
+			<div class="card-content">
+				<h5>Acesso ao Sistema</h5>
+				<div class="row">
+					<div class="input-fiel col s12">
+						<label>Login</label> 
+						<input type='text' name='username'>
+					</div>
+				</div>
 
-	<form th:action="@{/login}" method="post" class="col s12" >
-
-		<div class="row">
-			<div class="input-fiel col s6">
-				<label>Login</label> 
-				<input type='text' name='username'>
+				<div class="row">
+					<div class="input-fiel col s12">
+						<label>Senha</label> 
+						<input type='password' name='password' />
+					</div>
+				</div>
 			</div>
-		</div>
-
-		<div class="row">
-			<div class="input-fiel col s6">
-				<label>Senha</label> 
-				<input type='password' name='password' />
+		
+			<div class="card-action right-align">	
+				<button type="reset" class="btn-flat grey-text waves-effect" 
+                    onclick="document.getElementById('limpar').reset();">Redefinir</button>
+				<input name="submit" type="submit" value="Acessar" class="waves-effect waves-light btn"/>
 			</div>
-		</div>
-
-		<div class="row">
-			<div class="input-fiel col s6">
-				<input name="submit" type="submit" value="submit" class="waves-effect waves-light btn"/>
-			</div>
-		</div>
-	</form>
-
+		</form>
+	</div>
+</div>
 </body>
 </html>
